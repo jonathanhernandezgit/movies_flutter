@@ -9,8 +9,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final moviesProvider = Provider.of<MoviesProvider>(context);
 
-    print(moviesProvider.onDisplayMovies);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Películas en cines'),
@@ -30,6 +28,7 @@ class HomeScreen extends StatelessWidget {
             MovieSlider(
               movies: moviesProvider.popularMovies,
               populars: 'Lo nuevo',
+              onNextPage: () => moviesProvider.getPopularMovies(),
             ),
 
             //Listado Horizontal de Películas
