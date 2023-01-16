@@ -19,10 +19,12 @@ class DetailsScreen extends StatelessWidget {
         SliverList(
             delegate: SliverChildListDelegate([
           _PosterAndTitle(
+            movieId: movie.id,
             moviePoster: movie.fullPosterImg,
             movieTitle: movie.title,
             movieOriginalTitle: movie.originalTitle,
             movieVoteAverage: movie.voteAverage,
+            heroId: movie.heroId!,
           ),
           _OverView(movieOverview: movie.overview),
           CastingCards(
@@ -72,6 +74,8 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitle extends StatelessWidget {
+  final String heroId;
+  final int movieId;
   final String moviePoster;
   final String movieTitle;
   final String movieOriginalTitle;
@@ -82,7 +86,9 @@ class _PosterAndTitle extends StatelessWidget {
       required this.movieOriginalTitle,
       required this.movieVoteAverage,
       required this.movieTitle,
-      required this.moviePoster});
+      required this.moviePoster,
+      required this.heroId,
+      required this.movieId});
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -92,12 +98,15 @@ class _PosterAndTitle extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(moviePoster),
-                height: 150,
+            Hero(
+              tag: heroId,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(moviePoster),
+                  height: 150,
+                ),
               ),
             ),
             SizedBox(width: 20),
